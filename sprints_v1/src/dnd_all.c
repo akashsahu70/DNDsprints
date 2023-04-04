@@ -1,8 +1,10 @@
+
 #include "../headers/commonheaders.h"
 
-//Generate Userid
 
-static char *generateId(char *str, size_t  size)
+//Generate Id
+
+static char *generateId(char *str, size_t size)
 {
     const char charset[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012456789";
     if (size)
@@ -20,22 +22,25 @@ static char *generateId(char *str, size_t  size)
     return str;
 }
 
-
-//User Registration 
+//register the user details 
 
 User *registerUser(char name[], char mob[], char password[], User *f)
 {
     char *uidgen = malloc(sizeof(char) * 6);
     generateId(uidgen, 6);
-    printf("Your U-ID:%s. Please keep it copied", uidgen);
+    printf("Your U-ID is : %s.( Please keep it copied )\n\n", uidgen);
     User *current = (User *)malloc(sizeof(User));
     User *previous = f;
-
     strcpy(current->name, name);
     strcpy(current->uid, uidgen);
     strcpy(current->mob, mob);
     strcpy(current->password, password);
-    FILE *file = fopen("users", "a+");
+    FILE *file = fopen("users.txt", "a+");
+    if(file==NULL)
+    {
+	    perror("file open error");
+	    exit(EXIT_FAILURE);
+    }
     if (file != NULL)
     {
         fprintf(file, "%s;%s;%s;%s", current->uid, current->name, current->password, current->mob);
@@ -57,7 +62,12 @@ User *registerUser(char name[], char mob[], char password[], User *f)
     char base[10] = "./status/";
     strcpy(path, base);
     strcat(path, uidgen);
-    FILE *fpdnd = fopen(path, "a+");
+    FILE *fpdnd = fopen("path.txt", "a+");
+    if(fpdnd == NULL)
+    {
+	    perror("file open error dnd:");
+	    exit(EXIT_FAILURE);
+    }
     Selective dnd;
 
     dnd.status = 0;
@@ -74,7 +84,7 @@ User *registerUser(char name[], char mob[], char password[], User *f)
 }
 
 
-//User get login 
+//Login the user
 
 int loginUser(char uid[], char password[], User *f)
 {
@@ -91,33 +101,41 @@ int loginUser(char uid[], char password[], User *f)
     return 0;
 }
 
-int globalDnd = 0;
+int globalDnd=0;
 
 
-//DND function
+//DND Function
+
 
 User *dndInit()
 {
-    FILE *fp_ = fopen("globaldnd", "r+");
-    fscanf(fp_, "%d", &globalDnd);
-    fclose(fp_);
+    FILE *fp_ = fopen("globaldnd.txt", "r+");
+ 
+    if(fp_==NULL)
+    {
+	    perror("file handled error\n");
+	    exit(EXIT_FAILURE);
+    }
 
+    fscanf(fp_, "%d",&globalDnd);
+   
+
+    fclose(fp_);
     FILE *fp = NULL;
     User *newNode = NULL;
     User *head = NULL;
-    User *dd;
+    User *dd=NULL;
     int _fSize = 0;
-    char tmpBuff[1024] = {
-        '\0',
-    };
+    char tmpBuff[1024] = {'\0',};
 
-    fp = fopen("users", "r");
+    fp = fopen("users.txt", "r");
     if (fp == NULL)
     {
         perror("\n\tfopen() ");
         return NULL;
     }
-
+       
+                printf("\nok\n");
     fseek(fp, 0L, SEEK_SET);
     fseek(fp, 0L, SEEK_END);
     _fSize = ftell(fp);
@@ -130,7 +148,8 @@ User *dndInit()
         fseek(fp, 0L, SEEK_SET);
         memset(tmpBuff, '\0', 1024);
         // head = newNode;
-        while (fgets(tmpBuff, 1024, fp))
+	
+        while(fgets(tmpBuff, 1024, fp))
         {
 
             if (head == NULL) /* first record */
@@ -138,6 +157,7 @@ User *dndInit()
                 newNode = (User *)malloc(sizeof(User));
                 newNode->next = NULL;
                 head = newNode;
+
                 dd = newNode;
                 tokenize(newNode, tmpBuff);
             }
@@ -156,7 +176,6 @@ User *dndInit()
     return head;
 }
 
-
 //Global DND
 
 int updateGlobal(int status)
@@ -171,13 +190,16 @@ int updateGlobal(int status)
     fprintf(fp, "%d", status);
     fclose(fp);
     globalDnd = status;
+    if(status == 1)
     printf("\tGlobal DND is Activated.\n");
+    else
+    printf("\tGlobal DND is De_activated.\n");	    
     sleep(4);
     return 0;
 }
 
-
 //Selective DND
+
 
 int updateSelective(char uid[], int status)
 {
@@ -188,10 +210,16 @@ int updateSelective(char uid[], int status)
         return -1;
     }
     char path[25] = "";
-    char base[10] = "./status/";
+    char base[10] = "status.txt";
     strcpy(path, base);
     strcat(path, uid);
-    FILE *fp = fopen(path, "r");
+    FILE *fp = fopen("path.txt", "r");
+    if(fp==NULL)
+    {
+	    perror("fileope error\n");
+	    exit(EXIT_FAILURE);
+    }
+
     Selective sel;
     fread(&sel, sizeof(Selective), 1, fp);
     if (sel.status == status)
@@ -224,7 +252,7 @@ int updateSelective(char uid[], int status)
     return 0;
 }
 
-//check connect user
+//It checks the connection of user
 
 int connectUser(char f_uid[], char t_uid[], User *head)
 {
@@ -234,6 +262,13 @@ int connectUser(char f_uid[], char t_uid[], User *head)
         sleep(4);
         return -1;
     }
+    else if(globalDnd == 0)
+    {
+	    printf("DND has not been activated\n");
+	    sleep(3);
+	    return -1;
+    }
+
     else
     {
 
@@ -288,8 +323,7 @@ int connectUser(char f_uid[], char t_uid[], User *head)
     return 0;
 }
 
-
-//Display User
+//Display the registered user
 
 void showUsers(User *f)
 {
@@ -307,8 +341,7 @@ void showUsers(User *f)
 // }
 
 
-
-//Tokenize the details
+//Tokenizes details
 
 int tokenize(User *usr, char *tmpBuff)
 {
@@ -368,4 +401,3 @@ char *getMobileFromId(char *uid, User *f)
     }
     return "";
 }
-
