@@ -1,4 +1,16 @@
-#include "../headers/commonheaders.h"
+/*********************************************************************************************************************************
+* * FILE NAAME: main.c
+* *
+* *DESCRIPTION: This file contains menu function of dnd.
+* *
+* *REVISION HISTORY:
+* *DATE                 NAME                REFERENCE               REASON
+-----------------------------------------------------------------------------------------------------------------------
+* *                    Group-6              new file                Initial
+***********************************************************************************************************************
+* *                                     STANDARD HEADER FILES
+***********************************************************************************************************************************/
+#include "../inc/common.h"
 #include<sys/types.h>
 #include<unistd.h>
 #include<signal.h>
@@ -66,9 +78,9 @@ int main(int argc, char const *argv[])
 
 
         printf("\tEnter your PHONE NO:");
-       // fgets(phone, sizeof(phone), stdin);
-       // phone[strlen(phone)-1] = '\0';
-         scanf("%s",ph);
+          fgets(ph, sizeof(ph), stdin);
+         // ph[strlen(ph)-1] = '\0';
+        // scanf("%s",ph);
 	 int check = checkPhone(ph);
 	 while(check != 1)
 	 {
@@ -79,7 +91,10 @@ int main(int argc, char const *argv[])
 	
 	 
 		 printf("\nEnter correct Phone number: ");
-		 scanf("%s",ph);
+		// scanf("%s",ph);
+		 fgets(ph, sizeof(ph), stdin);
+            	// ph[strlen(ph)-1] = '\0';
+
 		 check = checkPhone(ph);
 		 if(check == 1){
 
