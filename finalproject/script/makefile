@@ -1,7 +1,7 @@
 #Current make system
 CC = gcc
 BIN=./bin/
-HEADER=./inc/
+HEADER=./headers/
 SOURCE=./src/
 OBJ= ./obj/
 OUT=./out/
@@ -30,5 +30,3 @@ clean:
 		rm -f $(OBJ)/*
 		rm -f $(BIN)/*
 		@echo "Cleaning is Done!"
-
-

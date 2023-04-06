@@ -1,5 +1,4 @@
-
-#include "../inc/commonheaders.h"
+#include "../headers/commonheaders.h"
 #include<sys/types.h>
 #include<unistd.h>
 #include<signal.h>
@@ -63,12 +62,34 @@ int main(int argc, char const *argv[])
         printf("\tEnter your PASSWORD:");
         fgets(pwd, sizeof(pwd), stdin);
         pwd[strlen(pwd) - 1] = '\0';
+	char ph[15];
+
 
         printf("\tEnter your PHONE NO:");
-        fgets(phone, sizeof(phone), stdin);
-        phone[strlen(phone)] = '\0';
+       // fgets(phone, sizeof(phone), stdin);
+       // phone[strlen(phone)-1] = '\0';
+         scanf("%s",ph);
+	 int check = checkPhone(ph);
+	 while(check != 1)
+	 {
+	// if(check == 1)
+	// {
+		// f = registerUser(uname, phone, pwd, f);
+	 //}
+	
+	 
+		 printf("\nEnter correct Phone number: ");
+		 scanf("%s",ph);
+		 check = checkPhone(ph);
+		 if(check == 1){
 
-        f = registerUser(uname, phone, pwd, f);
+                         strcpy(phone,ph);  
+			 break;
+		 }
+	 
+	 }
+	 strcpy(phone,ph);
+	  f = registerUser(uname, phone, pwd, f);
           
         exit(0);
     }
@@ -90,7 +111,7 @@ int main(int argc, char const *argv[])
     {
         clrscr();
         int c, sc;
-        printf("\n\n\t**********main-menu***********************\n");
+        printf("\n\n\t*********************************\n");
        
         printf("\tSelect Global DND\t(1)\n");
         printf("\tSelect Selective DND\t(2)\n");
@@ -104,7 +125,7 @@ int main(int argc, char const *argv[])
         switch (c)
         {
         case 1:
-            printf("\t========== GLOBAL =================\n");
+            printf("\t=======================\n");
             printf("\tGlobal DND\n\n");
             printf("\t\tTo turn ON\t(1)\n");
             printf("\t\tTo turn OFF\t(0)\n");
@@ -114,7 +135,7 @@ int main(int argc, char const *argv[])
             updateGlobal(sc);
             break;
         case 2:
-            printf("\t========== SELECTIVE =============\n");
+            printf("\t=======================\n");
             printf("\tSelective DND\n\n");
             printf("\t\tTo turn ON\t(1)\n");
             printf("\t\tTo turn OFF\t(0)\n");

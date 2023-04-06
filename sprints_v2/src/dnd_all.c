@@ -1,8 +1,27 @@
+/*********************************************************************************************************************************
+* * FILE NAAME: dnd_all.c
+* * 
+* *DESCRIPTION: This file contains all the necessary requirements for dnd.
+* *
+* *REVISION HISTORY:
+* *DATE					NAME				REFERENCE 				REASON
+-----------------------------------------------------------------------------------------------------------------------
+			               Group6				new file				Initial 
+***********************************************************************************************************************
+* *										STANDARD HEADER FILES
+***********************************************************************************************************************************/
 
-#include "../inc/commonheaders.h"
+#include "../inc/common.h"
 
+/**************************************************************************
+**
+** FUNCTION NAME: generateId
+**
+** DESCRIPTION:  It generates the ID for the user.
+**
+** RETURNS:  SUCCESS
+*****************************************************************************/
 
-//Generate Id
 
 static char *generateId(char *str, size_t size)
 {
@@ -22,7 +41,14 @@ static char *generateId(char *str, size_t size)
     return str;
 }
 
-//register the user details 
+/**************************************************************************
+**
+** FUNCTION NAME: registerUser
+**
+** DESCRIPTION:  It registers the details of user.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
 User *registerUser(char name[], char mob[], char password[], User *f)
 {
@@ -35,7 +61,7 @@ User *registerUser(char name[], char mob[], char password[], User *f)
     strcpy(current->uid, uidgen);
     strcpy(current->mob, mob);
     strcpy(current->password, password);
-    FILE *file = fopen("users.txt", "a+");
+    FILE *file = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/users.txt", "a+");
     if(file==NULL)
     {
 	    perror("file open error");
@@ -59,10 +85,10 @@ User *registerUser(char name[], char mob[], char password[], User *f)
     // User *temp;
 
     char path[25] = "";
-    char base[10] = "./status/";
+    char base[10] = "./status/";  //Directory
     strcpy(path, base);
     strcat(path, uidgen);
-    FILE *fpdnd = fopen("path.txt", "a+");
+    FILE *fpdnd = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/path.txt", "a+");
     if(fpdnd == NULL)
     {
 	    perror("file open error dnd:");
@@ -84,7 +110,14 @@ User *registerUser(char name[], char mob[], char password[], User *f)
 }
 
 
-//Login the user
+/**************************************************************************
+**
+** FUNCTION NAME: loginUser
+**
+** DESCRIPTION:  It will login based on user details.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
 int loginUser(char uid[], char password[], User *f)
 {
@@ -104,12 +137,19 @@ int loginUser(char uid[], char password[], User *f)
 int globalDnd=0;
 
 
-//DND Function
+/**************************************************************************
+**
+** FUNCTION NAME: dndInit
+**
+** DESCRIPTION:  It does dnd function.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
 
 User *dndInit()
 {
-    FILE *fp_ = fopen("globaldnd.txt", "r+");
+    FILE *fp_ = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/globaldnd.txt", "r+");
  
     if(fp_==NULL)
     {
@@ -128,14 +168,14 @@ User *dndInit()
     int _fSize = 0;
     char tmpBuff[1024] = {'\0',};
 
-    fp = fopen("users.txt", "r");
+    fp = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/users.txt", "r");
     if (fp == NULL)
     {
         perror("\n\tfopen() ");
         return NULL;
     }
        
-               // printf("\nok\n");
+                printf("\nok\n");
     fseek(fp, 0L, SEEK_SET);
     fseek(fp, 0L, SEEK_END);
     _fSize = ftell(fp);
@@ -176,7 +216,14 @@ User *dndInit()
     return head;
 }
 
-//Global DND
+/**************************************************************************
+**
+** FUNCTION NAME:updateGlobal
+**
+** DESCRIPTION:  It checks dnd status.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
 int updateGlobal(int status)
 {
@@ -186,7 +233,7 @@ int updateGlobal(int status)
         sleep(4);
         return -1;
     }
-    FILE *fp = fopen("globaldnd", "w");
+    FILE *fp = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/globaldnd.txt", "w");
     fprintf(fp, "%d", status);
     fclose(fp);
     globalDnd = status;
@@ -198,7 +245,14 @@ int updateGlobal(int status)
     return 0;
 }
 
-//Selective DND
+/**************************************************************************
+**
+** FUNCTION NAME: updateSelective
+**
+** DESCRIPTION:  It selects the dnd status.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
 
 int updateSelective(char uid[], int status)
@@ -213,7 +267,7 @@ int updateSelective(char uid[], int status)
     char base[10] = "status.txt";
     strcpy(path, base);
     strcat(path, uid);
-    FILE *fp = fopen("path.txt", "r");
+    FILE *fp = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/path.txt", "r");
     if(fp==NULL)
     {
 	    perror("fileope error\n");
@@ -244,7 +298,7 @@ int updateSelective(char uid[], int status)
     fclose(fp);
 
     sel.status = status;
-    FILE *fpdnd = fopen("path.txt", "wb");
+    FILE *fpdnd = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/path.txt ", "w+");
     fwrite(&sel, sizeof(Selective), 1, fpdnd);
     fclose(fpdnd);
     printf("Selective dnd is on for %s:", sel.phones);
@@ -252,7 +306,14 @@ int updateSelective(char uid[], int status)
     return 0;
 }
 
-//It checks the connection of user
+/**************************************************************************
+**
+** FUNCTION NAME: connectUser
+**
+** DESCRIPTION:  It checks if we want to connect one user to another.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
 int connectUser(char f_uid[], char t_uid[], User *head)
 {
@@ -279,7 +340,7 @@ int connectUser(char f_uid[], char t_uid[], User *head)
         strcpy(path, base);
         strcat(path, f_uid);
 
-        FILE *fp = fopen(path, "r");
+        FILE *fp = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/path.txt", "r");
         fread(&f, sizeof(Selective), 1, fp);
         fclose(fp);
 
@@ -287,7 +348,7 @@ int connectUser(char f_uid[], char t_uid[], User *head)
         strcpy(path, base);
         strcat(path, t_uid);
 
-        FILE *fp_ = fopen(path, "r");
+        FILE *fp_ = fopen("/home2/trainee56/project/DNDsprints/sprints_v2/status/path.txt ", "r");
         fread(&t, sizeof(Selective), 1, fp_);
         fclose(fp_);
 
@@ -323,7 +384,14 @@ int connectUser(char f_uid[], char t_uid[], User *head)
     return 0;
 }
 
-//Display the registered user
+/**************************************************************************
+**
+** FUNCTION NAME: showUser
+**
+** DESCRIPTION:  It displays all the user details registered.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
 void showUsers(User *f)
 {
@@ -340,8 +408,15 @@ void showUsers(User *f)
 //     free(f);
 // }
 
+/**************************************************************************
+**
+** FUNCTION NAME: tokenize
+**
+** DESCRIPTION:  It tokenizes the details.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
 
-//Tokenizes details
 
 int tokenize(User *usr, char *tmpBuff)
 {
@@ -363,7 +438,14 @@ int tokenize(User *usr, char *tmpBuff)
     return 0;
 }
 
-//Remove Spaces 
+/**************************************************************************
+**
+** FUNCTION NAME: removeTrailing
+**
+** DESCRIPTION:  It removes spaces.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/ 
 
 void removeTrailing(char *str)
 {
@@ -401,3 +483,23 @@ char *getMobileFromId(char *uid, User *f)
     }
     return "";
 }
+
+int checkPhone(char *phone) {
+    // to check whether phone number is 10 digits 
+    if (strlen(phone) != 10) {
+        printf("Phone number should be of 10 digits only\n");
+        return -1;
+    }
+
+//to check whether no other characters are present
+    for (int i = 0; i < strlen(phone); i++) {
+        if (!isdigit(phone[i])) {
+            printf("Phone number should not have any characters\n");
+            return -1;
+        }
+    }
+
+    
+    return 0;
+}
+
