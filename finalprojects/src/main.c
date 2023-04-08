@@ -11,6 +11,7 @@
 * *                                                              STANDARD HEADER FILES
 ************************************************************************************************************************************************************/
 #include "../inc/common.h"
+#include "../inc/log.h"
 #include<sys/types.h>
 #include<unistd.h>
 #include<signal.h>
@@ -21,14 +22,16 @@ void clrscr(void)
 }
 int main(int argc, char const *argv[])
 {
+	log_set_quiet(false);
+	log_set_level(LOG_TRACE);
        	User *f = NULL;
         f = (User *)malloc(sizeof(User));
         int ch;
         clrscr();
         f = dndInit();
-	
+	log_trace("Software has been started\n");
         printf("\t******Welcome TO The DND Implementation*****\n");
-        printf("<><><><><><><><> DO NOT DISTURB <><><><><><><><>\n"); 
+        printf("\t<><><><><><><><> DO NOT DISTURB <><><><><><><><>\n"); 
         printf("\tLogin \t\t(0)\n");
         printf("\tRegister\t(1)\n");
         printf("\tShow Users\t(2)\n");
