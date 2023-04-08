@@ -1,15 +1,15 @@
-/*********************************************************************************************************************************
+/************************************************************************************************************************************************************
 * * FILE NAAME: main.c
 * *
 * *DESCRIPTION: This file contains menu function of dnd.
 * *
 * *REVISION HISTORY:
-* *DATE                 NAME                REFERENCE               REASON
------------------------------------------------------------------------------------------------------------------------
-* *                    Group-6              new file                Initial
-***********************************************************************************************************************
-* *                                     STANDARD HEADER FILES
-***********************************************************************************************************************************/
+* *DATE                              NAME                             REFERENCE                                REASON
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+* *10/04/2023                       Group-6                            New File                               Initial
+*************************************************************************************************************************************************************
+* *                                                              STANDARD HEADER FILES
+************************************************************************************************************************************************************/
 #include "../inc/common.h"
 #include<sys/types.h>
 #include<unistd.h>
@@ -34,7 +34,6 @@ int main(int argc, char const *argv[])
     printf("\tEnter Your Choice:");
     scanf("%d", &ch);
     getchar();
-   // printf("hi\n");
     int status = 0;
     char loggedInUserId[10]; 
     if (ch == 0)
@@ -79,21 +78,11 @@ int main(int argc, char const *argv[])
 
         printf("\tEnter your PHONE NO:");
           fgets(ph, sizeof(ph), stdin);
-         // ph[strlen(ph)-1] = '\0';
-        // scanf("%s",ph);
 	 int check = checkPhone(ph);
 	 while(check != 1)
 	 {
-	// if(check == 1)
-	// {
-		// f = registerUser(uname, phone, pwd, f);
-	 //}
-	
-	 
 		 printf("\nEnter correct Phone number: ");
-		// scanf("%s",ph);
 		 fgets(ph, sizeof(ph), stdin);
-            	// ph[strlen(ph)-1] = '\0';
 
 		 check = checkPhone(ph);
 		 if(check == 1){
@@ -104,7 +93,7 @@ int main(int argc, char const *argv[])
 	 
 	 }
 	 strcpy(phone,ph);
-	  f = registerUser(uname, phone, pwd, f);
+	 f = registerUser(uname, phone, pwd, f);
           
         exit(0);
     }
@@ -126,7 +115,7 @@ int main(int argc, char const *argv[])
     {
         clrscr();
         int c, sc;
-        printf("\n\n\t*********************************\n");
+        printf("\n\n\t**************Main-Menu*******************\n");
        
         printf("\tSelect Global DND\t(1)\n");
         printf("\tSelect Selective DND\t(2)\n");
@@ -136,7 +125,6 @@ int main(int argc, char const *argv[])
         scanf("%d", &c);
         getchar();
 
-        // printf("\n\n");
         switch (c)
         {
         case 1:

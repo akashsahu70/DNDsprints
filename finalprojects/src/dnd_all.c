@@ -1,7 +1,25 @@
-#include "../headers/commonheaders.h"
+/************************************************************************************************************************************************************
+* * FILE NAAME: dnd_all.c
+* * 
+* *DESCRIPTION: This file contains all the necessary requirements for dnd.
+* *
+* *REVISION HISTORY:
+* *DATE					         NAME				REFERENCE 				REASON
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+**10/04/2023 		                	Group-6				new file				Initial 
+*********************************************************************************************************************************************************
+* *										STANDARD HEADER FILES
+************************************************************************************************************************************************************/
+#include "../inc/common.h"
 
-
-//Generate Id
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: generateId
+**
+** DESCRIPTION:  It generates the ID for the user.
+**
+** RETURNS:  SUCCESS 
+************************************************************************************************************************************************************/
 
 static char *generateId(char *str, size_t size)
 {
@@ -21,23 +39,31 @@ static char *generateId(char *str, size_t size)
     return str;
 }
 
-//register the user details 
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: registerUser
+**
+** DESCRIPTION:  It registers the details of user.
+**
+** RETURNS:  SUCCESS
+************************************************************************************************************************************************************/
 
 User *registerUser(char name[], char mob[], char password[], User *f)
 {
     char *uidgen = malloc(sizeof(char) * 6);
     generateId(uidgen, 6);
-    printf("Your U-ID is : %s.( Please keep it copied )\n\n", uidgen);
+    printf("Your Generated USER-ID is : %s.( Please keep it copied )\n\n", uidgen);
     User *current = (User *)malloc(sizeof(User));
     User *previous = f;
     strcpy(current->name, name);
     strcpy(current->uid, uidgen);
     strcpy(current->mob, mob);
     strcpy(current->password, password);
-    FILE *file = fopen("/home2/trainee56/finalproject/data/users.txt", "a+");
+    FILE *file = fopen("./data/users.txt", "a+");
     if(file==NULL)
     {
 	    perror("file open error");
+	    fclose(file);
 	    exit(EXIT_FAILURE);
     }
     if (file != NULL)
@@ -55,16 +81,16 @@ User *registerUser(char name[], char mob[], char password[], User *f)
         f->next = current;
     }
 
-    // User *temp;
 
     char path[25] = "";
     char base[10] = "./status/";
     strcpy(path, base);
     strcat(path, uidgen);
-    FILE *fpdnd = fopen("/home2/trainee56/finalproject/data/path.txt", "a+");
+    FILE *fpdnd = fopen(path, "a+");
     if(fpdnd == NULL)
     {
 	    perror("file open error dnd:");
+	    fclose(fpdnd);
 	    exit(EXIT_FAILURE);
     }
     Selective dnd;
@@ -77,13 +103,19 @@ User *registerUser(char name[], char mob[], char password[], User *f)
 
     fclose(fpdnd);
 
-    // printf("%s", path);
 
     return previous;
 }
 
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: loginUser
+**
+** DESCRIPTION:  It will login based on user details.
+**
+** RETURNS:  SUCCESS 
+************************************************************************************************************************************************************/
 
-//Login the user
 
 int loginUser(char uid[], char password[], User *f)
 {
@@ -92,7 +124,6 @@ int loginUser(char uid[], char password[], User *f)
     {
         if ((strcmp(usrs->uid, uid) == 0 && strcmp(usrs->password, password) == 0))
         {
-            // printf("Logged In!!");
             return 1;
         }
         usrs = usrs->next;
@@ -103,16 +134,24 @@ int loginUser(char uid[], char password[], User *f)
 int globalDnd=0;
 
 
-//DND Function
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: dndInit
+**
+** DESCRIPTION:  It does dnd function.
+**
+** RETURNS:  SUCCESS 
+************************************************************************************************************************************************************/
 
 
 User *dndInit()
 {
-    FILE *fp_ = fopen("/home2/trainee56/finalproject/data/globaldnd.txt", "r+");
+    FILE *fp_ = fopen("./data/globaldnd.txt", "r+");
  
     if(fp_==NULL)
     {
 	    perror("file handled error\n");
+	    fclose(fp_);
 	    exit(EXIT_FAILURE);
     }
 
@@ -127,14 +166,14 @@ User *dndInit()
     int _fSize = 0;
     char tmpBuff[1024] = {'\0',};
 
-    fp = fopen("/home2/trainee56/finalproject/data/users.txt", "r");
+    fp = fopen("./data/users.txt", "r");
     if (fp == NULL)
     {
         perror("\n\tfopen() ");
+	fclose(fp);
         return NULL;
     }
        
-                printf("\nok\n");
     fseek(fp, 0L, SEEK_SET);
     fseek(fp, 0L, SEEK_END);
     _fSize = ftell(fp);
@@ -146,7 +185,6 @@ User *dndInit()
     {
         fseek(fp, 0L, SEEK_SET);
         memset(tmpBuff, '\0', 1024);
-        // head = newNode;
 	
         while(fgets(tmpBuff, 1024, fp))
         {
@@ -175,7 +213,14 @@ User *dndInit()
     return head;
 }
 
-//Global DND
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: updateGlobal
+**
+** DESCRIPTION:  It checks dnd status.
+**
+** RETURNS:  SUCCESS
+************************************************************************************************************************************************************/
 
 int updateGlobal(int status)
 {
@@ -185,7 +230,7 @@ int updateGlobal(int status)
         sleep(4);
         return -1;
     }
-    FILE *fp = fopen("/home2/trainee56/finalproject/data/globaldnd.txt", "w");
+    FILE *fp = fopen("./data/globaldnd.txt", "w");
     fprintf(fp, "%d", status);
     fclose(fp);
     globalDnd = status;
@@ -197,11 +242,20 @@ int updateGlobal(int status)
     return 0;
 }
 
-//Selective DND
+/**************************************************************************
+**
+** FUNCTION NAME: updateSelective
+**
+** DESCRIPTION:  It selects the dnd status.
+**
+** RETURNS:  SUCCESS 
+*****************************************************************************/
+
 
 
 int updateSelective(char uid[], int status)
 {
+	int flag=1;
     if (globalDnd == 1)
     {
         printf("\nGlobal DND is ON. \ncouldnt Change Anything.\n");
@@ -209,13 +263,14 @@ int updateSelective(char uid[], int status)
         return -1;
     }
     char path[25] = "";
-    char base[10] = "status.txt";
+    char base[10] = "./status/";
     strcpy(path, base);
     strcat(path, uid);
-    FILE *fp = fopen("/home2/trainee56/finalproject/data/path.txt", "r");
+    FILE *fp = fopen(path, "rb");
     if(fp==NULL)
     {
 	    perror("fileope error\n");
+	    fclose(fp);
 	    exit(EXIT_FAILURE);
     }
 
@@ -225,19 +280,26 @@ int updateSelective(char uid[], int status)
     {
         printf("\nCouldn't change the status to itself\n");
         sleep(4);
+	fclose(fp);
         return -1;
     }
     else
     {
-        if (status == 1)
+       if (status == 1)
         {
             printf("\nEnter Phone numbers you want to add:");
             memset(sel.phones, '\0', 256);
             fgets(sel.phones, 255, stdin);
+	    flag=0;	
         }
-        else
+        if(status==0)
         {
+
+	    printf("selective dnd if off for %s :",sel.phones);
+
             memset(sel.phones, '\0', 256);
+
+	    sleep(2);
         }
     }
     fclose(fp);
@@ -246,30 +308,37 @@ int updateSelective(char uid[], int status)
     FILE *fpdnd = fopen(path, "wb");
     fwrite(&sel, sizeof(Selective), 1, fpdnd);
     fclose(fpdnd);
+    if(flag==0)
     printf("Selective dnd is on for %s:", sel.phones);
+
     sleep(2);
     return 0;
 }
 
-//It checks the connection of user
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: connectUser
+**
+** DESCRIPTION:  It checks if we want to connect one user to another.
+**
+** RETURNS:  SUCCESS
+************************************************************************************************************************************************************/
 
 int connectUser(char f_uid[], char t_uid[], User *head)
 {
+	int flag2=0;
+	int flag=0;
     if (globalDnd == 1)
     {
         printf("DND on Globally. Couldn't connect\n");
+	flag=1;
         sleep(4);
         return -1;
     }
-    else if(globalDnd == 0)
-    {
-	    printf("DND has not been activated\n");
-	    sleep(3);
-	    return -1;
-    }
 
-    else
+    else if(flag==0);
     {
+	   
 
         Selective f, t;
 
@@ -278,18 +347,18 @@ int connectUser(char f_uid[], char t_uid[], User *head)
         strcpy(path, base);
         strcat(path, f_uid);
 
-        FILE *fp = fopen("/home2/trainee56/finalproject/data/path.txt", "r");
+
+        FILE *fp = fopen(path, "r");
         fread(&f, sizeof(Selective), 1, fp);
         fclose(fp);
 
         strcpy(path, "");
         strcpy(path, base);
         strcat(path, t_uid);
-
         FILE *fp_ = fopen(path, "r");
         fread(&t, sizeof(Selective), 1, fp_);
         fclose(fp_);
-
+	
         char *me = getMobileFromId(f_uid, head);
 
         if (f.status == 1)
@@ -300,7 +369,7 @@ int connectUser(char f_uid[], char t_uid[], User *head)
         }
         else if (t.status == 1)
         {
-            if (strstr(t.phones, me) != NULL)
+            if (strcmp(t.phones, me) ==0)
             {
                 printf("You are blocked by the receiver. Couldn't connect.\n");
                 sleep(4);
@@ -308,7 +377,7 @@ int connectUser(char f_uid[], char t_uid[], User *head)
             }
             else
             {
-                printf("Connection Estblished\n");
+                printf("you are free to call\n");
                 sleep(4);
                 return 0;
             }
@@ -318,11 +387,19 @@ int connectUser(char f_uid[], char t_uid[], User *head)
             printf("Connection Estblished\n");
             sleep(4);
         }
+
     }
     return 0;
 }
 
-//Display the registered user
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: showUser
+**
+** DESCRIPTION:  It displays all the user details registered.
+**
+** RETURNS:  SUCCESS 
+************************************************************************************************************************************************************/
 
 void showUsers(User *f)
 {
@@ -334,13 +411,16 @@ void showUsers(User *f)
     }
 }
 
-// void doFree(Users *f)
-// {
-//     free(f);
-// }
 
 
-//Tokenizes details
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: tokenize
+**
+** DESCRIPTION:  It tokenizes the details.
+**
+** RETURNS:  SUCCESS 
+************************************************************************************************************************************************************/
 
 int tokenize(User *usr, char *tmpBuff)
 {
@@ -362,7 +442,14 @@ int tokenize(User *usr, char *tmpBuff)
     return 0;
 }
 
-//Remove Spaces 
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: removeTrailing
+**
+** DESCRIPTION:  It removes spaces.
+**
+** RETURNS:  SUCCESS 
+************************************************************************************************************************************************************/
 
 void removeTrailing(char *str)
 {
@@ -399,4 +486,27 @@ char *getMobileFromId(char *uid, User *f)
         t = t->next;
     }
     return "";
+}
+
+/************************************************************************************************************************************************************
+**
+** FUNCTION NAME: checkPhone
+**
+** DESCRIPTION:  It work for Number Validation.
+**
+** RETURNS:  SUCCESS
+************************************************************************************************************************************************************/
+
+int checkPhone(char *phone) {
+	if(strlen(phone) != 11){
+		printf("Phone number should be 10 digits only\n");
+		return -1;
+
+	}
+	else
+	{
+		if(phone[0]=='0')
+			return -1;
+	}
+	return 1;
 }
