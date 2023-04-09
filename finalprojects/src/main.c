@@ -31,11 +31,11 @@ int main(int argc, char const *argv[])
         f = dndInit();
 	log_trace("Software has been started\n");
         printf("\t******Welcome TO The DND Implementation*****\n");
-        printf("\t<><><><><><><><> DO NOT DISTURB <><><><><><><><>\n"); 
-        printf("\tLogin \t\t(0)\n");
-        printf("\tRegister\t(1)\n");
-        printf("\tShow Users\t(2)\n");
-        printf("\tQuit\t\t(3)\n\n");
+        printf("\t<><><><><><><><> DO NOT DISTURB <><><><><><>\n"); 
+        printf("\tLogin \t\t(1)\n");
+        printf("\tRegister\t(2)\n");
+        printf("\tShow Users\t(3)\n");
+        printf("\tQuit\t\t(4)\n\n");
 
         printf("\tEnter Your Choice:");
         scanf("%d", &ch);
@@ -43,7 +43,7 @@ int main(int argc, char const *argv[])
         int status = 0;
         char loggedInUserId[10]; 
        
-	if (ch == 0)
+	if (ch == 1)
         {
 		 char uid[10];
 		 char pwd[10];
@@ -57,14 +57,14 @@ int main(int argc, char const *argv[])
 		 status = loginUser(uid, pwd, f);
 		 if (status == 1)
 		 {
-			 printf("\tLogged In\n");
+			 printf("\tSuccessfully Logged In\n");
 			 strcpy(loggedInUserId, uid);
 			 sleep(2);
 		 }
 		 else
 			 printf("\tIncorrect User-id or Password\n");
 	}
-       	else if (ch == 1)
+       	else if (ch == 2)
 	{
 		char uname[10];
 		char pwd[10];
@@ -101,7 +101,7 @@ int main(int argc, char const *argv[])
 	       	f = registerUser(uname, phone, pwd, f);
 	       	exit(0);
        	}
-	else if (ch == 2)
+	else if (ch == 3)
 	{
 	       	clrscr();
 		sleep(1);
@@ -109,7 +109,7 @@ int main(int argc, char const *argv[])
 		printf("\t-------------------------------------\n");
 		showUsers(f);
 	}
-       	else if (ch == 3)
+       	else if (ch == 4)
 	{
 		exit(0);
 	}
