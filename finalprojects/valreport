@@ -1,0 +1,196 @@
+==14097== Memcheck, a memory error detector
+==14097== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14097== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==14097== Command: ./bin/main
+==14097== Parent PID: 13989
+==14097== 
+--14097-- 
+--14097-- Valgrind options:
+--14097--    -v
+--14097--    --tool=memcheck
+--14097--    --leak-check=full
+--14097--    --show-reachable=yes
+--14097--    --log-file=valreport
+--14097-- Contents of /proc/version:
+--14097--   Linux version 5.4.0-1089-azure (buildd@lcy02-amd64-011) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #94~18.04.1-Ubuntu SMP Fri Aug 5 12:34:50 UTC 2022
+--14097-- 
+--14097-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
+--14097-- Page sizes: currently 4096, max supported 4096
+--14097-- Valgrind library directory: /usr/lib/valgrind
+--14097-- Reading syms from /home2/trainee56/project/DNDsprints/finalprojects/bin/main
+--14097-- Reading syms from /lib/x86_64-linux-gnu/ld-2.27.so
+--14097--   Considering /lib/x86_64-linux-gnu/ld-2.27.so ..
+--14097--   .. CRC mismatch (computed 385b96e8 wanted 9d917e0b)
+--14097--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.27.so ..
+--14097--   .. CRC is valid
+--14097-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--14097--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--14097--   .. CRC mismatch (computed 41ddb025 wanted 9972f546)
+--14097--    object doesn't have a symbol table
+--14097--    object doesn't have a dynamic symbol table
+--14097-- Scheduler: using generic scheduler lock implementation.
+--14097-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==14097== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-14097-by-trainee56-on-???
+==14097== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-14097-by-trainee56-on-???
+==14097== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-14097-by-trainee56-on-???
+==14097== 
+==14097== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==14097== don't want to do, unless you know exactly what you're doing,
+==14097== or are doing some strange experiment):
+==14097==   /usr/lib/valgrind/../../bin/vgdb --pid=14097 ...command...
+==14097== 
+==14097== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==14097==   /path/to/gdb ./bin/main
+==14097== and then give GDB the following command
+==14097==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=14097
+==14097== --pid is optional if only one valgrind process is running
+==14097== 
+--14097-- REDIR: 0x4020d20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580608c1 (???)
+--14097-- REDIR: 0x4020b00 (ld-linux-x86-64.so.2:index) redirected to 0x580608db (???)
+--14097-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--14097--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--14097--   .. CRC mismatch (computed 50df1b30 wanted 4800a4cf)
+--14097--    object doesn't have a symbol table
+--14097-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--14097--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--14097--   .. CRC mismatch (computed f893b962 wanted 95ee359e)
+--14097--    object doesn't have a symbol table
+==14097== WARNING: new redirection conflicts with existing -- ignoring it
+--14097--     old: 0x04020d20 (strlen              ) R-> (0000.0) 0x580608c1 ???
+--14097--     new: 0x04020d20 (strlen              ) R-> (2007.0) 0x04c34db0 strlen
+--14097-- REDIR: 0x401d540 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c35ee0 (strcmp)
+--14097-- REDIR: 0x4021260 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c394f0 (mempcpy)
+--14097-- Reading syms from /lib/x86_64-linux-gnu/libc-2.27.so
+--14097--   Considering /lib/x86_64-linux-gnu/libc-2.27.so ..
+--14097--   .. CRC mismatch (computed 8c0be908 wanted 7c906570)
+--14097--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.27.so ..
+--14097--   .. CRC is valid
+--14097-- REDIR: 0x4edca50 (libc.so.6:memmove) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edbd60 (libc.so.6:strncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edcd30 (libc.so.6:strcasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edb7b0 (libc.so.6:strcat) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edbd90 (libc.so.6:rindex) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4ede480 (libc.so.6:rawmemchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edcbc0 (libc.so.6:mempcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edc9f0 (libc.so.6:bcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edbd20 (libc.so.6:strncmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edb820 (libc.so.6:strcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edcb20 (libc.so.6:memset) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4ef9db0 (libc.so.6:wcschr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edbcc0 (libc.so.6:strnlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edb890 (libc.so.6:strcspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edcd80 (libc.so.6:strncasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edb860 (libc.so.6:strcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edcec0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edbdc0 (libc.so.6:strpbrk) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edb7e0 (libc.so.6:index) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edbc90 (libc.so.6:strlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4ee6380 (libc.so.6:memrchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edcdd0 (libc.so.6:strcasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edc9c0 (libc.so.6:memchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4efab70 (libc.so.6:wcslen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edc070 (libc.so.6:strspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edcd00 (libc.so.6:stpncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edccd0 (libc.so.6:stpcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4ede4b0 (libc.so.6:strchrnul) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4edce20 (libc.so.6:strncasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--14097-- REDIR: 0x4fcc280 (libc.so.6:__strrchr_avx2) redirected to 0x4c34730 (rindex)
+--14097-- REDIR: 0x4ed5020 (libc.so.6:malloc) redirected to 0x4c31aa0 (malloc)
+--14097-- REDIR: 0x4edc5a0 (libc.so.6:__GI_strstr) redirected to 0x4c39760 (__strstr_sse2)
+--14097-- REDIR: 0x4ed5910 (libc.so.6:free) redirected to 0x4c32cd0 (free)
+--14097-- REDIR: 0x4fcce10 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4c385d0 (memset)
+--14097-- REDIR: 0x4fc82e0 (libc.so.6:__memchr_avx2) redirected to 0x4c35f80 (memchr)
+--14097-- REDIR: 0x4fcc990 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4c386e0 (memmove)
+--14097-- REDIR: 0x4fc81c0 (libc.so.6:__strspn_sse42) redirected to 0x4c39990 (strspn)
+--14097-- REDIR: 0x4fc7f30 (libc.so.6:__strcspn_sse42) redirected to 0x4c398d0 (strcspn)
+--14097-- REDIR: 0x4fcc450 (libc.so.6:__strlen_avx2) redirected to 0x4c34cf0 (strlen)
+--14097-- REDIR: 0x4fc8a60 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4c37e00 (bcmp)
+--14097-- REDIR: 0x4fc85b0 (libc.so.6:__rawmemchr_avx2) redirected to 0x4c39050 (rawmemchr)
+--14097-- REDIR: 0x4fcc090 (libc.so.6:__strchrnul_avx2) redirected to 0x4c39020 (strchrnul)
+--14097-- REDIR: 0x4fcc970 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4c39130 (mempcpy)
+--14097-- REDIR: 0x4ef4200 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c34dd0 (strcpy)
+--14097-- REDIR: 0x4ef71f0 (libc.so.6:__strcat_sse2_unaligned) redirected to 0x4c34990 (strcat)
+==14097== Syscall param write(buf) points to uninitialised byte(s)
+==14097==    at 0x4F4E104: write (write.c:27)
+==14097==    by 0x4EC915C: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1203)
+==14097==    by 0x4ECAF00: new_do_write (fileops.c:457)
+==14097==    by 0x4ECAF00: _IO_do_write@@GLIBC_2.2.5 (fileops.c:433)
+==14097==    by 0x4ECA2AF: _IO_file_close_it@@GLIBC_2.2.5 (fileops.c:136)
+==14097==    by 0x4EBC336: fclose@@GLIBC_2.2.5 (iofclose.c:53)
+==14097==    by 0x1095A9: registerUser (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A580: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==  Address 0x5234ee6 is 6 bytes inside a block of size 4,096 alloc'd
+==14097==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14097==    by 0x4EBC13B: _IO_file_doallocate (filedoalloc.c:101)
+==14097==    by 0x4ECC328: _IO_doallocbuf (genops.c:365)
+==14097==    by 0x4ECB447: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:759)
+==14097==    by 0x4EC998C: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1266)
+==14097==    by 0x4EBD926: fwrite (iofwrite.c:39)
+==14097==    by 0x10959A: registerUser (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A580: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097== 
+==14097== 
+==14097== HEAP SUMMARY:
+==14097==     in use at exit: 846 bytes in 16 blocks
+==14097==   total heap usage: 31 allocs, 15 frees, 26,214 bytes allocated
+==14097== 
+==14097== Searching for pointers to 16 not-freed blocks
+==14097== Checked 68,912 bytes
+==14097== 
+==14097== 6 bytes in 1 blocks are definitely lost in loss record 1 of 5
+==14097==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14097==    by 0x1092C1: registerUser (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A580: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097== 
+==14097== 56 bytes in 1 blocks are still reachable in loss record 2 of 5
+==14097==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14097==    by 0x10980C: dndInit (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A26E: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097== 
+==14097== 56 bytes in 1 blocks are still reachable in loss record 3 of 5
+==14097==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14097==    by 0x109301: registerUser (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A580: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097== 
+==14097== 56 bytes in 1 blocks are definitely lost in loss record 4 of 5
+==14097==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14097==    by 0x10A25B: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097== 
+==14097== 672 bytes in 12 blocks are still reachable in loss record 5 of 5
+==14097==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14097==    by 0x109863: dndInit (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A26E: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097== 
+==14097== LEAK SUMMARY:
+==14097==    definitely lost: 0 bytes in 0 blocks
+==14097==    indirectly lost: 0 bytes in 0 blocks
+==14097==      possibly lost: 0 bytes in 0 blocks
+==14097==    still reachable: 784 bytes in 14 blocks
+==14097==         suppressed: 0 bytes in 0 blocks
+==14097== 
+==14097== Use --track-origins=yes to see where uninitialised values come from
+==14097== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+==14097== 
+==14097== 1 errors in context 1 of 3:
+==14097== Syscall param write(buf) points to uninitialised byte(s)
+==14097==    at 0x4F4E104: write (write.c:27)
+==14097==    by 0x4EC915C: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1203)
+==14097==    by 0x4ECAF00: new_do_write (fileops.c:457)
+==14097==    by 0x4ECAF00: _IO_do_write@@GLIBC_2.2.5 (fileops.c:433)
+==14097==    by 0x4ECA2AF: _IO_file_close_it@@GLIBC_2.2.5 (fileops.c:136)
+==14097==    by 0x4EBC336: fclose@@GLIBC_2.2.5 (iofclose.c:53)
+==14097==    by 0x1095A9: registerUser (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A580: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==  Address 0x5234ee6 is 6 bytes inside a block of size 4,096 alloc'd
+==14097==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==14097==    by 0x4EBC13B: _IO_file_doallocate (filedoalloc.c:101)
+==14097==    by 0x4ECC328: _IO_doallocbuf (genops.c:365)
+==14097==    by 0x4ECB447: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:759)
+==14097==    by 0x4EC998C: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1266)
+==14097==    by 0x4EBD926: fwrite (iofwrite.c:39)
+==14097==    by 0x10959A: registerUser (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097==    by 0x10A580: main (in /home2/trainee56/project/DNDsprints/finalprojects/bin/main)
+==14097== 
+==14097== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==14097== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+
